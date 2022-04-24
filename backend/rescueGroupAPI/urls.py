@@ -7,5 +7,6 @@ r = routers.DefaultRouter()
 
 urlpatterns = [
     path('', include(r.urls)),
-    path('petlist/', petlistCall)
+    path('adoptees/', adopteesCall),
+    path('doggo/<int:doggo_id>/', doggoCall),
 ]

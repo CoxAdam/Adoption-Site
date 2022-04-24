@@ -1,43 +1,53 @@
 import rescueGroupAPI from '../api/rescueGroupAPI';
 import theDogAPI from '../api/theDogAPI';
 import { useEffect, useState } from 'react';
+import AppCarousel from '../components/AppCarousel';
 
 
 function HomePage() {
+  const [adoptees, setAdoptees] = useState([])
+  const [doggo, setDoggo] = useState([])
   const [dogFacts, setDogFacts] = useState([])
-  const [dogBreeds, setDogBreeds] = useState([])
 
-  const loadAnimals = async () => {
-    const data = await theDogAPI.fetchDogFacts()
-    setDogFacts(data.data)
+  const loadAdoptees = async () => {
+    const pupper_list = []
+    const data = await rescueGroupAPI.fetchAdoptees()
+    setAdoptees(data.data)
+    if (data){
+      for (let i = 0; i < 5; i++){
+        const pupper_data = await rescueGroupAPI.fetchDoggo(data.data[i].id)
+        pupper_list.push(pupper_data)
+      }
+    }
+    setDoggo(pupper_list)
   }
 
-  const loadBreeds = async () => {
-    const data = await rescueGroupAPI.fetchBreeds()
-    setDogBreeds(data)
-  }
+  // const loadAnimals = async () => {
+  //   const data = await theDogAPI.fetchDogFacts()
+  //   setDogFacts(data.data)
+  // }
 
   useEffect(() => {
-    loadBreeds()
+    loadAdoptees()
   }, [])
 
-  useEffect(() => {
-    loadAnimals()
-  }, [])
+  // useEffect(() => {
+  //   loadAnimals()
+  // }, [])
 
   
   return (
     <div>
       <div>This is the HomePage</div>
-      {
-        dogFacts[0] ? <img src={dogFacts[0].url} className='med-image'/> : <div>Image Loading...</div>
-      }
-      {console.log(dogBreeds)}
-      {console.log('dogFacts', dogFacts)}
+
+      {/* {adoptees != [] ? <img src={adoptees[0].attributes.pictureThumbnailUrl}/> : <div>Image Loading...</div>} */}
+      
+      {doggo != [] ? <AppCarousel adoptees={doggo}/> : <div>Image Loading...</div>}
+      
+      {console.log('ADOPTEES:', adoptees)}
+      {console.log('DOGGO:', doggo)}  
     </div>
   )
 }
 
 export default HomePage
-
-

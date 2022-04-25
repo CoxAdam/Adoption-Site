@@ -30,7 +30,7 @@ function AppNav() {
   }
 
   return (
-    <Navbar bg="dark" variant='dark'>
+    <Navbar bg="success" variant='light' fixed='top' className='navbar'>
       <Navbar.Brand as={ Link } to='/'>ADS</Navbar.Brand>
       <Container fluid className="justify-content-end">
         { renderAuthItems() }

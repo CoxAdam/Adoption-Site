@@ -4,7 +4,7 @@ import AppCarousel from '../components/AppCarousel';
 
 
 function HomePage() {
-  const [adoptees, setAdoptees] = useState()
+  const [adoptees, setAdoptees] = useState(null)
 
   const loadAdoptees = async () => {
     const data = await rescueGroupAPI.fetchAdoptees()
@@ -16,15 +16,10 @@ function HomePage() {
   }, [])
   
   return (
-    <div>
-      <div>This is the HomePage</div>
-
-      {/* {adoptees != [] ? <img src={adoptees[0].attributes.pictureThumbnailUrl}/> : <div>Image Loading...</div>} */}
+    <div className='homepage'>
       
-      {/* {adoptees ? <AppCarousel adoptees={adoptees}/> : <div>Image Loading...</div>} */}
+      {adoptees ? <AppCarousel adoptees={adoptees}/> : <div>Image Loading...</div>}
       
-      {/* {console.log('ADOPTEES:', adoptees)}
-      {console.log('DOGGO:', doggo)}   */}
     </div>
   )
 }

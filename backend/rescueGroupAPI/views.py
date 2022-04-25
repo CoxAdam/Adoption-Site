@@ -1,8 +1,13 @@
-from django.shortcuts import render
-from rest_framework import viewsets
+from .serializers import *
+from .view_auth import *
+from rest_framework.viewsets import ModelViewSet
 from django.http import HttpResponse
 import json
 import requests
+
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 rescueGroupURL = 'http://api.rescuegroups.org/v5'
 rescueGroupApiKey = 'iabkil4W'
@@ -11,7 +16,7 @@ headers_dict = {
     }
 
 def adopteesCall(request):
-    response = requests.get(f'{rescueGroupURL}/public/animals/search/available/dogs/', headers=headers_dict)
+    response = requests.get(f'{rescueGroupURL}/public/animals/search/available/dogs/?limit=250', headers=headers_dict)  
     data = response.json()
     return HttpResponse(json.dumps(data))
 

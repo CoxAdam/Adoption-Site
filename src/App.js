@@ -20,7 +20,7 @@ function App() {
          <div className='main'>
             <Routes>
               <Route path="/" element={ <HomePage/> }/>
-              <Route path="/animals/:animal" element={ <AnimalPage/> }/>
+              <Route path="/animals/:species/:limit/:postal_code" element={ <AnimalPage/> }/>
               <Route path="/doggo/:doggo_id" element={ <DoggoPage/> }/>
               <Route path="/login" element={ <LoginPage/> }/>
               <Route path="/signup" element={ <SignupPage/> }/>

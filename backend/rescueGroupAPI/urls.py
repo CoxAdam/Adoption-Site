@@ -11,4 +11,5 @@ urlpatterns = [
     path('logout/', handle_logout),
     path('adoptees/', adopteesCall),
     path('doggo/<int:doggo_id>/', doggoCall),
+    path('animal/<str:species>/<int:limit>/<int:postal_code>/', animalCall),
 ]

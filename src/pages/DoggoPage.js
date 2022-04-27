@@ -5,6 +5,7 @@ import { Carousel, CarouselItem } from 'react-bootstrap';
 
 function DoggoPage(){
   const [doggo, setDoggo] = useState()
+  const [orgURL, setOrgURL] = useState()
 
   const params = useParams()
 
@@ -16,6 +17,17 @@ function DoggoPage(){
   useEffect(() => {
     loadDoggo()
   }, [])
+
+  
+  const loadOrg = async () => {
+    const data = await rescueGroupAPI.fetchOrg(doggo.data[0].relationships.orgs.data[0].id)
+    console.log("DATA:", data)
+    setOrgURL(data.data[0].attributes.url)
+  }
+
+  useEffect(() => {
+    if (doggo) {loadOrg()}
+  })
 
   const loadInfo = () => {
     if (doggo){
@@ -29,23 +41,25 @@ function DoggoPage(){
       return (
       <div className='doggoinfo'>
         <h1>{doggo_name}</h1>
-        <div>{doggo ? doggo_data.breedPrimary : <div></div>}{doggo_data.breedSecondary ? <div> / {doggo_data.breedSecondary}</div> : <div></div>}</div>
+        <div>{doggo ? doggo_data.breedPrimary : ""}{doggo_data.breedSecondary ? ` / ${doggo_data.breedSecondary}` : <div></div>}</div>
         <div className='linebreak'></div>
-        {doggo_data.ageGroup} / {doggo_data.sex} / {doggo_data.sizeGroup}: {doggo_data.sizePotential} {doggo_data.sizeUOM}
+        {doggo_data.ageGroup ? `${doggo_data.ageGroup}` : ""} {doggo_data.ageString ? `: ${doggo_data.ageString}` : ""}{doggo_data.sex ? ` / ${doggo_data.sex}` : ""} {doggo_data.sizeGroup ? ` / ${doggo_data.sizeGroup}` : ""} {doggo_data.sizePotential ? ` / ${doggo_data.sizePotential}: ${doggo_data.sizeUOM}` : ""}
         <div className='linebreak'></div>
-        <h3>About {doggo_name}</h3>
-        <br/>
+        <h3>About {doggo_name}</h3>        
+        {doggo_data.activityLevel ? <div>
         <h5>Activity Level</h5>
-        <div>{doggo_data.activityLevel}</div>
-        <br/>
+        <div>{doggo_data.activityLevel}</div><br/></div> : ""}
+        {doggo_data.groomingNeeds ? <div> 
         <h5>Grooming Needs</h5>
-        <div>{doggo_data.groomingNeeds}</div>
-        <br/>
+        <div>{doggo_data.groomingNeeds}</div><br/></div> : ""}
         <h5>Is Ok Around:</h5>
-        <div>{doggo_data.adultSexesOk}{doggo_data.isKidsOk ? ', Children' : ""}{doggo_data.isDogsOk ?', Dogs' : ""}{doggo_data.isCatsOk ?  ', Cats' : ""}</div>
+        <div>{doggo_data.adultSexesOk ? doggo_data.adultSexesOk == "All" ? "Men and Women" : doggo_data.adultSexesOk : ""}{doggo_data.isKidsOk ? '|Children' : ""}{doggo_data.isDogsOk ?'|Dogs' : ""}{doggo_data.isCatsOk ?  '|Cats' : ""}</div>
         <br/>
         <h5>Is House Trained:</h5>
         <div>{doggo_data.isHousetrained ? "Yes" : "No"}</div>
+        <br/>
+        <h5>Shelter / Organization Url</h5>
+        <a href={orgURL}>{orgURL}</a>
         <div className='linebreak'></div>
         <br/>
         <h3>Description</h3>

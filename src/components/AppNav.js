@@ -1,6 +1,7 @@
-import { Navbar, Nav, Container, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavItem, NavbarBrand } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useUsername, useUpdateUsername } from './UserContext';
+import logo from '../cool.png'
 
 function AppNav() {
   const username = useUsername()
@@ -31,7 +32,8 @@ function AppNav() {
 
   return (
     <Navbar bg="success" variant='light' fixed='top' className='navbar'>
-      <Navbar.Brand as={ Link } to='/'>ADS</Navbar.Brand>
+      <Navbar.Brand as={ Link } to='/'><img className='logo' src={logo} alt='logo'/></Navbar.Brand>
+      <NavbarBrand>ADS</NavbarBrand>
       <Container fluid className="justify-content-end">
         { renderAuthItems() }
       </Container>

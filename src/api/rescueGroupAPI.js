@@ -13,8 +13,20 @@ const fetchAnimals = async (species, limit, postal_code) => {
 }
 
 const fetchDoggo = async (doggo_id) => {
-  return await authAPI.tryCatchFetch(() => axios.post(`${url}/doggo/${doggo_id}/`, authAPI.getCsrtConfig()))
+  return await authAPI.tryCatchFetch(() => axios.get(`${url}/doggo/${doggo_id}/`, authAPI.getCsrtConfig()))
 }
 
-const myExports = {fetchAdoptees, fetchDoggo, fetchAnimals}
+const fetchOrg = async (org_id) => {
+  return await authAPI.tryCatchFetch(() => axios.get(`${url}/orgs/${org_id}`, authAPI.getCsrtConfig()))
+}
+
+const fetchAnimalList = async () => {
+  return await authAPI.tryCatchFetch(() => axios.get(`${url}/animal_list/`, authAPI.getCsrtConfig()))
+}
+
+const fetchTest = async () => {
+  return await authAPI.tryCatchFetch(() => axios.get(`${url}/test/`, authAPI.getCsrtConfig()))
+}
+
+const myExports = {fetchAdoptees, fetchDoggo, fetchAnimals, fetchTest, fetchOrg, fetchAnimalList}
 export default myExports

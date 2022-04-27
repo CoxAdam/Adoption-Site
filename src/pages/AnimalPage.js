@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import rescueGroupAPI from '../api/rescueGroupAPI';
 
 
@@ -17,8 +17,6 @@ function AnimalPage() {
     loadAnimals()
   }, [])
 
-  // console.log("ANIMALS:", animals)
-
   const dog_list = []
   if (animals) {
     let temp_list =[]
@@ -31,29 +29,35 @@ function AnimalPage() {
     }
   }
 
-  // console.log("DOG LIST:", dog_list)
-
   return (
     <div>
-      AnimalPage
+      <br/>
+      <h1>Available Animals</h1>
+      <h4>{params.postal_code != '0' ? `Postal Code: ${params.postal_code}` : ""}</h4>
       {dog_list !== [] ? dog_list.map((doggo, index) => {
         return (
           <div className="flex" key={index}>
-            <div className="box"><img src={doggo[0].attributes.pictureThumbnailUrl}/></div>
-            {doggo[1] ? <div className="box"><img src={doggo[1].attributes.pictureThumbnailUrl}/></div> : ""}
-            {doggo [2] ? <div className="box"><img src={doggo[2].attributes.pictureThumbnailUrl}/></div> : ""}
+            <div className="box"><img src={doggo[0].attributes.pictureThumbnailUrl} placeholder='No Image'/>
+            <h3><Link className='animalLink' to={`/doggo/${doggo[0].id}`}>{doggo[0].attributes.name.includes(' ') ? doggo[0].attributes.name.substring(0, doggo[0].attributes.name.indexOf(' ')) : doggo[0].attributes.name}</Link></h3>
+            <div>{doggo[0].attributes.ageGroup}</div>
+            <div>{doggo[0].attributes.breedPrimary}{doggo[0].attributes.breedSecondary ? ` / ${doggo[0].attributes.breedSecondary}` : ""}</div>
+            <div></div>
+            </div>
+            {doggo[1] ? <div className="box"><img src={doggo[1].attributes.pictureThumbnailUrl} placeholder='No Image'/>
+            <h3><Link className='animalLink' to={`/doggo/${doggo[1].id}`}>{doggo[1].attributes.name.includes(' ') ? doggo[1].attributes.name.substring(0, doggo[1].attributes.name.indexOf(' ')) : doggo[1].attributes.name}</Link></h3>
+            <div>{doggo[1].attributes.ageGroup}</div>
+            <div>{doggo[1].attributes.breedPrimary}{doggo[1].attributes.breedSecondary ? ` / ${doggo[1].attributes.breedSecondary}` : ""}</div>
+            <div></div>
+            </div> : ""}
+            {doggo[2] ? <div className="box"><img src={doggo[2].attributes.pictureThumbnailUrl} placeholder='No Image'/>
+            <h3><Link className='animalLink' to={`/doggo/${doggo[2].id}`}>{doggo[2].attributes.name.includes(' ') ? doggo[2].attributes.name.substring(0, doggo[2].attributes.name.indexOf(' ')) : doggo[2].attributes.name}</Link></h3>
+            <div>{doggo[2].attributes.ageGroup}</div>
+            <div>{doggo[2].attributes.breedPrimary}{doggo[2].attributes.breedSecondary ? ` / ${doggo[2].attributes.breedSecondary}` : ""}</div>
+            <div></div>
+            </div> : ""}
           </div>
         )
       }) : <h5>Page Loading...</h5>}
-      {/* {new_lista.map((array, index) => {
-        return (
-          <div className="flex" key={index}>
-            <div className="box">{array[0]}</div>
-            {array[1] ? <div className="box">{array[1]}</div> : ""}
-            {array[2] ? <div className="box">{array[2]}</div> : ""}
-          </div>
-        )
-      })} */}
     </div>
 
   )

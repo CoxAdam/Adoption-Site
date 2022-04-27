@@ -9,6 +9,7 @@ import DoggoPage from './pages/DoggoPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import AnimalPage from './pages/AnimalPage';
+import Test from './pages/test';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/doggo/:doggo_id" element={ <DoggoPage/> }/>
               <Route path="/login" element={ <LoginPage/> }/>
               <Route path="/signup" element={ <SignupPage/> }/>
+              <Route path="/test" element={ <Test/> }/>
             </Routes>
           </div>
         </HashRouter>

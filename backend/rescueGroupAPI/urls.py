@@ -12,4 +12,7 @@ urlpatterns = [
     path('adoptees/', adopteesCall),
     path('doggo/<int:doggo_id>/', doggoCall),
     path('animal/<str:species>/<int:limit>/<int:postal_code>/', animalCall),
+    path('test/', callTest),
+    path('orgs/<int:org_id>/', callOrg),
+    path('animal_list/', animalListCall)
 ]

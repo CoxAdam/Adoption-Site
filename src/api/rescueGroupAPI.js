@@ -28,5 +28,9 @@ const fetchTest = async () => {
   return await authAPI.tryCatchFetch(() => axios.get(`${url}/test/`, authAPI.getCsrtConfig()))
 }
 
-const myExports = {fetchAdoptees, fetchDoggo, fetchAnimals, fetchTest, fetchOrg, fetchAnimalList}
+const fetchBookmarks = async (username) => {
+  return await authAPI.tryCatchFetch(() => axios.get(`${url}/bookmarks/${username}/`, authAPI.getCsrtConfig()))
+}
+
+const myExports = {fetchAdoptees, fetchDoggo, fetchAnimals, fetchTest, fetchOrg, fetchAnimalList, fetchBookmarks}
 export default myExports

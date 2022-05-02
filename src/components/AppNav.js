@@ -7,16 +7,16 @@ function AppNav() {
   const username = useUsername()
   const updateUsername = useUpdateUsername()
 
+  console.log("USERNAME:", username)
+
   const handleLogout = () => {
     updateUsername('')
   }
 
   const renderAuthItems = () => {
-    if (username === "") {
+    if (username == undefined || username == '') {
       return (
         <Nav>
-          <Nav.Link>{username !== "" ? username : "No Username"}</Nav.Link>
-          <Nav.Link as={ Link } to='doggo/'>Doggo</Nav.Link>
           <Nav.Link as={ Link } to='login/'>Login</Nav.Link>
           <Nav.Link as={ Link } to='signup/'>Signup</Nav.Link>
         </Nav>
@@ -25,6 +25,7 @@ function AppNav() {
 
     return (
       <Nav>
+        <Nav.Link as={ Link } to='/bookmarks'>Bookmarks</Nav.Link>
         <Nav.Link as={ Link } to='/' onClick={ handleLogout }>Logout</Nav.Link>
       </Nav>     
     )

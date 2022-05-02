@@ -4,6 +4,7 @@ from .views import *
 
 r = routers.DefaultRouter()
 r.register('users', UserViewSet, basename='user')
+r.register('bookmarks', BookmarkView, basename='bookmark')
 
 urlpatterns = [
     path('', include(r.urls)),
@@ -14,5 +15,7 @@ urlpatterns = [
     path('animal/<str:species>/<int:limit>/<int:postal_code>/', animalCall),
     path('test/', callTest),
     path('orgs/<int:org_id>/', callOrg),
-    path('animal_list/', animalListCall)
+    path('animal_list/', animalListCall),
+    path('user_data/<str:user_name>/', userCall),
+    path('bookmark_data/<str:user_name>/', callBookmarks),
 ]

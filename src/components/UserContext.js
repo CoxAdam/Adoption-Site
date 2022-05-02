@@ -12,7 +12,7 @@ export const useUpdateUsername = () => {
 }
 
 export const UserProvider = ({value, children}) => {
-  const [username, setUsername] = useState(value)
+  const [username, setUsername] = useState(localStorage.getItem('username'))
   return (
     <UsernameContext.Provider value={username}>
       <UpdateUsernameContext.Provider value={setUsername}>

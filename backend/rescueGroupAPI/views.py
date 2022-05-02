@@ -5,6 +5,10 @@ from django.http import HttpResponse
 import json
 import requests
 
+class BookmarkView(ModelViewSet):
+    queryset = Bookmark.objects.all()
+    serializer_class = BookmarkSerializer
+
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -14,6 +18,9 @@ rescueGroupApiKey = 'iabkil4W'
 headers_dict = {
         'Authorization': rescueGroupApiKey
     }
+
+def userCall(request, user_name):
+    return User.objects.get(username=user_name)
 
 def adopteesCall(request):
     response = requests.get(f'{rescueGroupURL}/public/animals/search/available/dogs/?limit=250', headers=headers_dict)  
@@ -76,3 +83,11 @@ def callTest(request):
     response = requests.post(f'{rescueGroupURL}/public/animals/search/available/haspic', headers=headers_dict, json=json_dict)
     data = response.json()
     return HttpResponse(json.dumps(data))
+
+def callBookmarks(request, user_name):
+    print('this is bookmarks call')
+    user_data = User.objects.get(username=user_name)
+    print(user_data)
+    bookmark_data = user_data.bookmarks
+    print(bookmark_data)
+    return HttpResponse(bookmark_data)

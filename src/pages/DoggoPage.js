@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import rescueGroupAPI from '../api/rescueGroupAPI';
 import { Carousel, CarouselItem } from 'react-bootstrap';
+import { useUsername } from '../components/UserContext';
+import authAPI from '../api/authAPI';
 
 function DoggoPage(){
   const [doggo, setDoggo] = useState()
   const [orgURL, setOrgURL] = useState()
 
   const params = useParams()
+  const navigate = useNavigate()
+  const username = useUsername()
 
   const loadDoggo = async () => {
     const data = await rescueGroupAPI.fetchDoggo(params.doggo_id)
@@ -18,6 +22,28 @@ function DoggoPage(){
     loadDoggo()
   }, [])
 
+  const handleBookmark = async (evt) => {
+    evt.preventDefault()
+    
+    if (username == "" || username == undefined){
+      navigate("/login")
+    }
+    else{
+      const user_data = await authAPI.fetchUserData(username)
+      if (user_data){
+        let bookmarkData = {
+        owner: user_data,
+        bookmark: doggo.data[0].id
+        }
+        const data = await authAPI.bookmark(bookmarkData)
+        if(data){
+          return (
+            <div>Success!</div>
+          )
+        }
+      }
+    }
+  }
   
   const loadOrg = async () => {
     const data = await rescueGroupAPI.fetchOrg(doggo.data[0].relationships.orgs.data[0].id)
@@ -65,7 +91,7 @@ function DoggoPage(){
         <h3>Description</h3>
         <div>{doggo_data.isSpecialNeeds ? "Special Needs" : ""}</div>
         <br/>
-        <div>{doggo_data.descriptionText}</div>
+        <div>{doggo_data.descriptionHtml}</div>
         <br/>
       </div>
       )
@@ -99,6 +125,9 @@ function DoggoPage(){
       {loadInfo()}
       <br/>
       <br/>
+      <form onClick={ handleBookmark }>
+        <button>Bookmark</button>
+      </form>
     </div>
   )
 }

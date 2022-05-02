@@ -18,6 +18,7 @@ function LoginPage() {
     const data = await authAPI.login(loginData)
     if (data) {
       console.log(data)
+      localStorage.setItem('username', data.username)
       updateUsername(data.username)
       navigate("/")
     }

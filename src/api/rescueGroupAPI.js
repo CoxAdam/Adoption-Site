@@ -29,7 +29,7 @@ const fetchTest = async () => {
 }
 
 const fetchBookmarks = async (username) => {
-  return await authAPI.tryCatchFetch(() => axios.get(`${url}/bookmarks/${username}/`, authAPI.getCsrtConfig()))
+  return await authAPI.tryCatchFetch(() => axios.get(`${url}/bookmark_data/${username}/`, authAPI.getCsrtConfig()))
 }
 
 const myExports = {fetchAdoptees, fetchDoggo, fetchAnimals, fetchTest, fetchOrg, fetchAnimalList, fetchBookmarks}

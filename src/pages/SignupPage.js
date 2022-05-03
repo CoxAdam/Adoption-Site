@@ -11,7 +11,7 @@ function SignupPage() {
         username: evt.target.elements["username"].value,
         password: evt.target.elements["password"].value,
     }
-    console.log("SIGNUP INFO:", signupData)
+    localStorage.setItem('username', signupData.username)
 
     const data = await authAPI.signup(signupData)
     if (data) {

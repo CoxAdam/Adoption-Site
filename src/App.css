@@ -7,6 +7,45 @@
   background-color: rgb(241, 237, 245);
 }
 
+.doggoheader{
+  text-align: center;
+}
+
+.doggopic{
+  height: 400px;
+  width: 400px;
+}
+
+.bookmark{
+  height: 300px;
+  width: 80vw;
+  margin-left: 50px;
+  border-radius: 20px;
+  margin-top: 30px;
+  box-shadow: 0px 0px 20px 1px rgb(75, 75, 75);
+  background-color: white;
+  text-align: center;
+}
+
+.bookmark h1{
+  color: green;
+}
+
+.bookmark .pic{
+  height: 300px;
+  width: 350px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  float: left;
+}
+
+.divider{
+  height: 300px;
+  width: 5px;
+  float: left;
+  background-color: black;
+}
+
 .dropdown-menu {
   height: 50vh;
   overflow-y: scroll;

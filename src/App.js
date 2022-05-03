@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import AnimalPage from './pages/AnimalPage';
 import BookmarkPage from './pages/BookmarkPage';
+import BreedPage from './pages/BreedPage';
 import Test from './pages/test';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
               <Route path="/login" element={ <LoginPage/> }/>
               <Route path="/signup" element={ <SignupPage/> }/>
               <Route path="/bookmarks" element={ <BookmarkPage/> }/>
+              <Route path="/breed/:breed_name" element={ <BreedPage/> }/>
               <Route path="/test" element={ <Test/> }/>
             </Routes>
           </div>

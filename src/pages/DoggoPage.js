@@ -29,13 +29,12 @@ function DoggoPage(){
       navigate("/login")
     }
     else{
-      const user_data = await authAPI.fetchUserData(username)
-      if (user_data){
-        let bookmarkData = {
-        owner: user_data,
-        bookmark: doggo.data[0].id
-        }
-        const data = await authAPI.bookmark(bookmarkData)
+      const bookmark = doggo.data[0].id
+      if (username){
+        
+        console.log("BOOKMARK DATA:", bookmark)
+        console.log(doggo.data[0].id)
+        const data = await authAPI.bookmark(username, bookmark)
         if(data){
           return (
             <div>Success!</div>
@@ -91,8 +90,11 @@ function DoggoPage(){
         <h3>Description</h3>
         <div>{doggo_data.isSpecialNeeds ? "Special Needs" : ""}</div>
         <br/>
-        <div>{doggo_data.descriptionHtml}</div>
+        <div>{doggo_data.descriptionText}</div>
         <br/>
+        <form onClick={ handleBookmark }>
+          <button>Bookmark</button>
+        </form>
       </div>
       )
     }
@@ -125,9 +127,6 @@ function DoggoPage(){
       {loadInfo()}
       <br/>
       <br/>
-      <form onClick={ handleBookmark }>
-        <button>Bookmark</button>
-      </form>
     </div>
   )
 }

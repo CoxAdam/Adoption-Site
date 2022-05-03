@@ -1,3 +1,4 @@
+from curses.ascii import HT
 from .serializers import *
 from .view_auth import *
 from rest_framework.viewsets import ModelViewSet
@@ -19,8 +20,15 @@ headers_dict = {
         'Authorization': rescueGroupApiKey
     }
 
-def userCall(request, user_name):
-    return User.objects.get(username=user_name)
+def userCall(user_name):
+    user_data = User.objects.get(username=user_name)
+    return user_data
+
+def callCreateBookmark(request, bookmark, user_name):
+    user_data = userCall(user_name)
+    new_bookmark = Bookmark(owner=user_data, bookmarks=bookmark)
+    new_bookmark.save()
+    return HttpResponse('Success')
 
 def adopteesCall(request):
     response = requests.get(f'{rescueGroupURL}/public/animals/search/available/dogs/?limit=250', headers=headers_dict)  
@@ -85,9 +93,12 @@ def callTest(request):
     return HttpResponse(json.dumps(data))
 
 def callBookmarks(request, user_name):
-    print('this is bookmarks call')
     user_data = User.objects.get(username=user_name)
-    print(user_data)
-    bookmark_data = user_data.bookmarks
-    print(bookmark_data)
-    return HttpResponse(bookmark_data)
+    bookmark_data = Bookmark.objects.filter(owner=user_data)
+    bookmark_list = []
+    for index, object in enumerate(bookmark_data):
+        bookmark_list.append(object.bookmarks)
+        if index != len(bookmark_data) - 1:
+            bookmark_list.append(",")
+
+    return HttpResponse(bookmark_list)

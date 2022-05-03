@@ -36,11 +36,11 @@ authAPI.signup = async (signupData) => {
   return await authAPI.tryCatchFetch(() => axios.post(`${url}/users/`, signupData, authAPI.getCsrtConfig()))
 }
 
-authAPI.bookmark = async (bookmarkData) => {
-  return await authAPI.tryCatchFetch(() => axios.post(`${url}/bookmarks/`, bookmarkData, authAPI.getCsrtConfig()))
+authAPI.bookmark = async (username, bookmark) => {
+  return await authAPI.tryCatchFetch(() => axios.get(`${url}/create_bookmark/${bookmark}/${username}/`, authAPI.getCsrtConfig()))
 }
 
-authAPI.bookmark = async (username) => {
+authAPI.fetchUserData = async (username) => {
   return await authAPI.tryCatchFetch(() => axios.get(`${url}/user_data/${username}/`, authAPI.getCsrtConfig()))
 }
 

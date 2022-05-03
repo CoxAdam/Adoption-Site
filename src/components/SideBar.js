@@ -2,23 +2,21 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams} from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import rescueGroupAPI from '../api/rescueGroupAPI';
+import theDogAPI from '../api/theDogAPI';
 
 function SideBar() {
   const [postalCode, setPostalCode] = useState(0)
   const [species, setSpecies] = useState()
   const [animalList, setAnimalList] = useState([])
-  console.log("SPECIES:", species)
+  const [breedInfo, setBreedInfo] = useState()
 
   const params = useParams()
   const navigate = useNavigate()
-  console.log("PARAMS:", params)
 
   const loadAnimalList = async () => {
     const data = await rescueGroupAPI.fetchAnimalList()
     setAnimalList(data.data)
   }
-
-  console.log("ANIMAL LIST:", animalList)
 
   useEffect(() => {
     loadAnimalList()
@@ -35,9 +33,26 @@ function SideBar() {
   }
   displayAnimals()
 
+  const getBreedInfo = async () => {
+    const temp_list = []
+    const data = await theDogAPI.fetchDogFacts()
+    if (data) {
+      for (let i = 0; i < data.length; i++){
+        temp_list.push(data[i].name)
+      }
+    }
+    setBreedInfo(temp_list)
+  }
+  useEffect(() => {
+    getBreedInfo()
+  }, [species])
+
+  const handleBreed = (breed_name) => {
+    navigate(`/breed/${breed_name}`)
+    window.location.reload(false)
+  }
+
   const handleSpecies = (animal) => {
-    console.log("ANIMAL:", animal)
-    console.log('species changed')
     setSpecies(animal)
     navigate(`/animals/${animal}/25/${postalCode}`)
     window.location.reload(false)
@@ -73,6 +88,19 @@ function SideBar() {
           <input className='sidebar_input' type='text' name='postalcode' placeholder='Enter Zip Code then pick Animal'></input>
           <button type='submit'>Submit</button>
         </form>
+        <br/>
+        <Dropdown className='dropdown'>
+          <Dropdown.Toggle variant='secondary'>
+            Breed Info
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            {breedInfo ? breedInfo.map((name, index) => {
+              return (
+                <Dropdown.Item onClick={() => {handleBreed(name)}} key={ index }>{name}</Dropdown.Item>
+              )
+            }) : ""}
+          </Dropdown.Menu>
+        </Dropdown>
       </ul>
     </div>
   )

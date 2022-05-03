@@ -18,4 +18,5 @@ urlpatterns = [
     path('animal_list/', animalListCall),
     path('user_data/<str:user_name>/', userCall),
     path('bookmark_data/<str:user_name>/', callBookmarks),
+    path('create_bookmark/<int:bookmark>/<str:user_name>/', callCreateBookmark)
 ]

@@ -10,6 +10,7 @@ function AppNav() {
   console.log("USERNAME:", username)
 
   const handleLogout = () => {
+    localStorage.setItem('username', '')
     updateUsername('')
   }
 
